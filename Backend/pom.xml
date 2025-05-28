@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.titus</groupId>
-	<artifactId>ecommerce-tutam_cafe</artifactId>
+	<artifactId>tutam_cafe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ecommerce-tutam_cafe</name>
+	<name>tutam_cafe</name>
 	<description>E-commerce backend system</description>
 	<url/>
 	<licenses>
