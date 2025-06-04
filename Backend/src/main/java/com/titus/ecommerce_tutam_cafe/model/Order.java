@@ -11,11 +11,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "`order`")
 public class Order {
 	
 	@Id
@@ -26,6 +29,7 @@ public class Order {
 	private String orderId;
 	
 	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -45,9 +49,9 @@ public class Order {
 	
 	private Integer totalDiscountedPrice;
 	
-	private Integer dicounts;
+	private Integer discounts;
 	
-	private String OrderStatus;
+	private String orderStatus;
 	
 	private int totalItems;
 	
@@ -59,7 +63,7 @@ public class Order {
 
 	public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate,
 			LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice,
-			Integer totalDiscountedPrice, Integer dicounts, String orderStatus, int totalItems,
+			Integer totalDiscountedPrice, Integer discounts, String orderStatus, int totalItems,
 			LocalDateTime createdAt) {
 		super();
 		this.id = id;
@@ -72,8 +76,8 @@ public class Order {
 		this.paymentDetails = paymentDetails;
 		this.totalPrice = totalPrice;
 		this.totalDiscountedPrice = totalDiscountedPrice;
-		this.dicounts = dicounts;
-		OrderStatus = orderStatus;
+		this.discounts = discounts;
+		this.orderStatus = orderStatus;
 		this.totalItems = totalItems;
 		this.createdAt = createdAt;
 	}
@@ -158,20 +162,20 @@ public class Order {
 		this.totalDiscountedPrice = totalDiscountedPrice;
 	}
 
-	public Integer getDicounts() {
-		return dicounts;
+	public Integer getDiscounts() {
+		return discounts;
 	}
 
-	public void setDicounts(Integer dicounts) {
-		this.dicounts = dicounts;
+	public void setDiscounts(Integer discounts) {
+		this.discounts = discounts;
 	}
 
 	public String getOrderStatus() {
-		return OrderStatus;
+		return orderStatus;
 	}
 
 	public void setOrderStatus(String orderStatus) {
-		OrderStatus = orderStatus;
+		this.orderStatus = orderStatus;
 	}
 
 	public int getTotalItems() {

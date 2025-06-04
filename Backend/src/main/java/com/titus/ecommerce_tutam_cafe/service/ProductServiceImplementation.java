@@ -72,7 +72,7 @@ public class ProductServiceImplementation implements ProductService {
 		product.setTitle(req.getTitle());
 		product.setColor(req.getColor());
 		product.setDescription(req.getDescription());
-		product.setDiscountedPrice(req.getDiscountPrice());
+		product.setDiscountedPrice(req.getDiscountedPrice());
 		product.setDiscountPercent(req.getDiscountPercent());
 		product.setImageUrl(req.getImageUrl());
 		product.setBrand(req.getBrand());
@@ -158,5 +158,11 @@ public class ProductServiceImplementation implements ProductService {
 		Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
 		
 		return filteredProducts;
+	}
+
+	@Override
+	public List<Product> findAllProducts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

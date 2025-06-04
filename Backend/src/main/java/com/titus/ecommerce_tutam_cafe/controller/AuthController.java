@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.titus.ecommerce_tutam_cafe.config.JwtProvider;
 import com.titus.ecommerce_tutam_cafe.exception.UserException;
+import com.titus.ecommerce_tutam_cafe.model.Cart;
 import com.titus.ecommerce_tutam_cafe.model.User;
 import com.titus.ecommerce_tutam_cafe.repository.UserRepository;
 import com.titus.ecommerce_tutam_cafe.request.LoginRequest;
 import com.titus.ecommerce_tutam_cafe.response.AuthResponse;
+import com.titus.ecommerce_tutam_cafe.service.CartService;
 import com.titus.ecommerce_tutam_cafe.service.CustomUserServiceImplementation;
 
 @RestController
@@ -29,15 +31,19 @@ public class AuthController {
 	private JwtProvider jwtProvider;
 	private PasswordEncoder passwordEncoder;
 	private CustomUserServiceImplementation customUserServiceImplementation;
+	private CartService cartService;
 	
 	public AuthController(UserRepository userRepository,
 			JwtProvider jwtProvider,
 			PasswordEncoder passwordEncoder,
-			CustomUserServiceImplementation customUserServiceImplementation) {
+			CustomUserServiceImplementation customUserServiceImplementation,
+			CartService cartService) {
+		
 		this.userRepository = userRepository;
 		this.jwtProvider = jwtProvider;
 		this.passwordEncoder = passwordEncoder;
 		this.customUserServiceImplementation = customUserServiceImplementation;
+		this.cartService = cartService;
 	}
 	
 	@PostMapping("/signup")
@@ -61,6 +67,7 @@ public class AuthController {
 		createdUser.setLastName(lastName);
 		
 		User savedUser = userRepository.save(createdUser);
+		Cart cart = cartService.createCart(savedUser);
 		
 		Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
 		SecurityContextHolder.getContext().setAuthentication(authentication);

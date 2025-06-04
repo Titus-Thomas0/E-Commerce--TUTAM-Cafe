@@ -20,6 +20,8 @@ public interface ProductService {
 	
 	public List<Product> findProductByCategory(String category);
 	
-	public Page<Product>getAllProduct(String category, List<String>colors, List<String>sizes, Integer minprice, Integer maxPrice,
+	public Page<Product> getAllProduct(String category, List<String>colors, List<String>sizes, Integer minprice, Integer maxPrice,
 			Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize);
+
+	public List<Product> findAllProducts(); //Have to consider in future...
 }
