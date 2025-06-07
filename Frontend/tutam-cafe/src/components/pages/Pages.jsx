@@ -3,6 +3,11 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './home/Home'
 import Order from './order/Order'
 import Pay from './pay/Pay'
+import Gift from './gift/Gift'
+import Store from './store/Store'
+import Search from './search/Search'
+import Account from './account/Account'
+
 
 function Pages() {
   return (
@@ -11,8 +16,10 @@ function Pages() {
             <Route path="/" element={ <Home /> } />
             <Route path="/Order" element={ <Order /> } />
             <Route path="/Pay" element={ <Pay /> } />
-            <Route path="/Order" element={ <Order /> } />
-            <Route path="/Pay" element={ <Pay /> } />
+            <Route path="/Gift" element={ <Gift /> } />
+            <Route path="/Store" element={ <Store /> } />
+            <Route path="/Search" element={ <Search /> } />
+            <Route path="/Account" element={ <Account /> } />
         </Routes>
     </>
   )
