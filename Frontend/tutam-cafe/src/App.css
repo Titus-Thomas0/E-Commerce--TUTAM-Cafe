@@ -1,18 +1,23 @@
+@import "tailwindcss";
+
+
 /*==========Declaring root element==========*/
 :root {
     /*==========Declaring color variables==========*/
-    --color-background: rgb(228, 224, 225);
-    --color-primary: rgb(73, 54, 40);
-    --color-text-1: white;
-    --color-text-2: black;
-    --color-darkBackground: black;
-
-    /*==========Declaring font-style==========*/
-    font-family: 'Courier New', Courier, monospace;
+    --color-text: #2e2e2e;
+    --color-background: #e5e1e2;
+    --color-primary: #483528;
+    --color-secondary: #b2a595;
+    --color-accent: #d97f3a;
 }
 
 /*==========Declaring body element==========*/
 body {
     background-color: var(--color-background);
-    color: var(--color-primary);
+    color: var(--color-text);
+
+    /*==========Declaring font-style==========*/
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
 }
+

@@ -5,8 +5,8 @@ import NavBar from './navBar/NavBar'
 function Header() {
   return (
     <>
-        <Banner />
-        <NavBar />
+      <Banner />
+      <NavBar /> 
     </>
   )
 }
