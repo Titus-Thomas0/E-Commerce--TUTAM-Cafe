@@ -8,21 +8,23 @@ import Store from './store/Store'
 import Search from './search/Search'
 import Account from './account/Account'
 import Rewards from './rewards/Rewards'
+import SelectStore from './order/SelectStore'
 
 
 function Pages() {
   return (
     <>
-        <Routes>
-            <Route path="/" element={ <Home /> } />
-            <Route path="/Order" element={ <Order /> } />
-            <Route path="/Pay" element={ <Pay /> } />
-            <Route path="/Gift" element={ <Gift /> } />
-            <Route path="/Store" element={ <Store /> } />
-            <Route path="/Search" element={ <Search /> } />
-            <Route path="/Account" element={ <Account /> } />
-            <Route path="/Rewards" element={ <Rewards />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+        <Route path="/Order" element={ <Order /> } ></Route>
+        <Route path="/Pay" element={ <Pay /> } />
+        <Route path="/Gift" element={ <Gift /> } />
+        <Route path="/Store" element={ <Store /> } />
+        <Route path="/Search" element={ <Search /> } />
+        <Route path="/Account" element={ <Account /> } />
+        <Route path="/Rewards" element={ <Rewards />} />
+        <Route path="/Order/SelectStore" element={<SelectStore />} />
+      </Routes>
     </>
   )
 }

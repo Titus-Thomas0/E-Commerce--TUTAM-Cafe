@@ -1,8 +1,11 @@
 import React from 'react'
+import BreadCrumbs from '../BreadCrumbs'
 
 function Pay() {
   return (
-    <div>Pay</div>
+    <div>
+      <BreadCrumbs />
+    </div>
   )
 }
 
