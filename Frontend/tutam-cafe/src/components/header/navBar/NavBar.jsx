@@ -1,9 +1,9 @@
-import React from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useLocation } from 'react-router-dom';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SearchBox from './SearchBox'
+import UserAvatar from './UserAvatar';
 
 const navigation = [
   { name: 'Home', href: '/'},
@@ -17,13 +17,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
 function NavBar() {
   const location = useLocation();
 
   return (
     <>
-      <Disclosure as="nav" className="text-[var(--color-primary)] border-b-1">
+      <Disclosure as="nav" className="sticky top-0 z-50 bg-[var(--color-background)] text-[var(--color-primary)] border-b-1">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -69,13 +68,7 @@ function NavBar() {
               <SearchBox />
 
               {/* Profile dropdown */}
-              <a href="/Account" className='ml-3 md:ml-7 flex items-center rounded-full'>
-                <AccountCircleOutlinedIcon
-                  aria-hidden="true"
-                  className="rounded-full text-[var(--color-primary)] hover:text-[var(--color-accent)] text-2xl md:text-3xl lg:text-4xl"
-                  
-                />
-              </a>
+              <UserAvatar />
             </div>
           </div>
         </div>

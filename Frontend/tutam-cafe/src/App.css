@@ -9,6 +9,12 @@
     --color-primary: #483528;
     --color-secondary: #b2a595;
     --color-accent: #d97f3a;
+    --color-gold: #FFD700;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-success: #28a745;
+    --color-success-light: #d4edda;
+    --color-error: #dc3545;
 }
 
 /*==========Declaring body element==========*/

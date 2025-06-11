@@ -7,6 +7,7 @@ import Gift from './gift/Gift'
 import Store from './store/Store'
 import Search from './search/Search'
 import Account from './account/Account'
+import Rewards from './rewards/Rewards'
 
 
 function Pages() {
@@ -20,6 +21,7 @@ function Pages() {
             <Route path="/Store" element={ <Store /> } />
             <Route path="/Search" element={ <Search /> } />
             <Route path="/Account" element={ <Account /> } />
+            <Route path="/Rewards" element={ <Rewards />} />
         </Routes>
     </>
   )
