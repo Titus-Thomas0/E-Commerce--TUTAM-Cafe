@@ -9,6 +9,7 @@ import Search from './search/Search'
 import Account from './account/Account'
 import Rewards from './rewards/Rewards'
 import SelectStore from './order/SelectStore'
+import OrderCustomize from './order/OrderCustomize'
 
 
 function Pages() {
@@ -24,6 +25,7 @@ function Pages() {
         <Route path="/Account" element={ <Account /> } />
         <Route path="/Rewards" element={ <Rewards />} />
         <Route path="/Order/SelectStore" element={<SelectStore />} />
+        <Route path="/Order/Customize/:productName" element={<OrderCustomize />} />
       </Routes>
     </>
   )

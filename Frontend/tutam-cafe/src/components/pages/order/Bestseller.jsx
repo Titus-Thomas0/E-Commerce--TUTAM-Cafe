@@ -1,17 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import ProductCard from './ProductCard';
 
 function Bestseller() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/products/bestseller') // Update your backend endpoint as needed
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error("Failed to load products", err));
+  }, []);
+
   return (
-    <div className='mt-10'>
+    <div className="mt-10">
       <div>
-        <h3 className='text-xl font-bold'>Bestseller</h3>
-        <p className='text-base font-normal'>Everyone's favorite TUTAM Cafe put together in a specially curated collection.</p>
+        <h3 className="text-xl font-bold">Bestseller</h3>
+        <p className="text-base font-normal">
+          Everyone's favorite TUTAM Cafe put together in a specially curated collection.
+        </p>
       </div>
-      <div className='my-10'>
-        <div className='bg-red-200 h-60 w-60'></div>
+
+      <div className="flex flex-wrap justify-start gap-6 my-10">
+        {products.map((product, idx) => (
+          <ProductCard key={idx} product={product} />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default Bestseller
+export default Bestseller;

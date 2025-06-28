@@ -153,7 +153,7 @@ function StoreLocation() {
                   </small>
                 </div>
                 <button onClick={() => setErrorVisible(false)}>
-                  <XMarkIcon className="h-5 w-5 text-[var(--color-error)] ml-2" />
+                  <XMarkIcon className="h-5 w-5 text-[var(--color-error)] cursor-pointer ml-2" />
                 </button>
               </div>
             )}
@@ -165,7 +165,7 @@ function StoreLocation() {
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} className="relative z-50">
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <DialogPanel className="bg-[var(--color-background)] rounded-md max-w-sm w-full p-6 text-[var(--color-primary)] shadow-xl">
+          <DialogPanel className="bg-[var(--color-background)] rounded-xl max-w-sm w-full p-6 text-[var(--color-primary)] shadow-xl">
             <DialogTitle className="text-lg font-semibold mb-2">Store Not Selected</DialogTitle>
             <Description className="text-base mb-4">
               Please select a store to continue ordering.
@@ -173,7 +173,7 @@ function StoreLocation() {
             <div className="flex justify-center space-x-2">
               <button
                 onClick={() => setDialogOpen(false)}
-                className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-background)] rounded-md"
+                className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-background)] cursor-pointer rounded-md"
               >
                 Cancel
               </button>
