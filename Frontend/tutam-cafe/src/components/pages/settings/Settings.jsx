@@ -1,15 +1,13 @@
 import React from 'react'
 import BreadCrumbs from '../BreadCrumbs'
-import UserProfile from './UserProfile'
 
-function Account() {
+function Settings() {
   return (
     <div>
       <BreadCrumbs />
-      <UserProfile />
-      
+      Settings
     </div>
   )
 }
 
-export default Account
+export default Settings

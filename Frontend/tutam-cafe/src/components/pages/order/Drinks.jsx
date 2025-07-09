@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ProductCard from './ProductCard';
 import { Tab, TabGroup, TabList, TabPanels, TabPanel } from '@headlessui/react';
-import TuneIcon from '@mui/icons-material/Tune';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 function Drinks() {
   const [products, setProducts] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const tabListRef = useRef(null);
 
   const categories = [
     'Espresso',
@@ -20,7 +22,7 @@ function Drinks() {
 
   const categoriesDescription = [
     'Our smooth signature Espresso Roast with rich flavor and caramelly sweetness is at the very heart of everything we do.',
-    'The Frappuccino® is a blended beverage unique to Starbucks.',
+    'The Frappuccino® is a blended beverage unique to TUTAM Cafe.',
     'The contemporary taste of TUTAM Cafe in a coffee-free avatar.',
     'The TUTAM Cafe brews are made with premium estate coffee to impart a unique flavour.',
     'An exclusive tea experience championed by TUTAM Cafe India.',
@@ -29,235 +31,150 @@ function Drinks() {
   ];
 
   const filters = [
-    'Hot',
-    'Cold',
-    'Milkshake',
-    'Black',
-    'Blended',
-    'Caffeine Free',
-    'Nitro',
-    'On Top',
-    'Ice Cream',
-    'Cream',
-    'Brew',
-    'Juice'
+    'Hot', 'Cold', 'Milkshake', 'Black', 'Blended',
+    'Caffeine Free', 'Nitro', 'On Top', 'Ice Cream',
+    'Cream', 'Brew', 'Juice'
   ];
-  
-    useEffect(() => {
-      const savedTab = localStorage.getItem('productType');
-      const tabValue = savedTab !== null ? Number(savedTab) : 0;
-      setTabIndex(tabValue);
 
-      fetch('/api/products/drinks') // Update your backend endpoint as needed
-        .then(res => res.json())
-        .then(data => setProducts(data))
-        .catch(err => console.error("Failed to load products", err));
-    }, []);
+  useEffect(() => {
+    fetch('/api/products/drinks')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error("Failed to load products", err));
+  }, []);
 
-    const handleTabChange = (index) => {
-      setTabIndex(index);
-      localStorage.setItem('productType', index);
-    };
+  const handleTabChange = (index) => {
+    setTabIndex(index);
+  };
 
+  const scrollTabs = (direction) => {
+    const container = tabListRef.current;
+    if (container) {
+      container.scrollBy({
+        left: direction === 'left' ? -200 : 200,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const getFilteredCategories = () => {
+    if (!selectedFilter) return categories;
+    return categories.filter(category =>
+      products.some(p => p.category === category && p.tags?.includes(selectedFilter))
+    );
+  };
+
+  const visibleCategories = getFilteredCategories();
 
   return (
-    <div >
-      <div >
-        <TabGroup selectedIndex={tabIndex} onChange={handleTabChange}>
-          <div className='bg-[var(--color-background)] text-[var(--color-primary)] border-b-1 border- [var(--color-secondary)] w-full'>
-            <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-              <div>
-                <TabList className="flex overflow-x-auto whitespace-nowrap no-scrollbar items-center">
-                  {categories.map((label, idx) => (
-                    <React.Fragment key={idx}>
-                      {idx !== 0 && <span className='mx-2'> </span>}
-                      <Tab 
-                        className={({ selected }) => 
-                        `py-2 transition-color duration-200 ${
-                          selected
-                            ? 'font-bold border-b-2 border-[var(--color-primary)]'
-                                    : 'hover:border-b-2'
-                        }`}
-                      >
-                        {label}
-                      </Tab>
-                    </React.Fragment>
-                  ))}
-                </TabList>
+    <div>
+      <TabGroup selectedIndex={tabIndex} onChange={handleTabChange}>
+        {/* Category Tabs */}
+        <div className='bg-[var(--color-background)] text-[var(--color-primary)] border-b w-full'>
+          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex items-center'>
+            <button onClick={() => scrollTabs('left')} className="p-2 hover:bg-[var(--color-secondary)] rounded-full">
+              <ChevronLeftIcon className="h-5 w-5 text-[var(--color-primary)]" />
+            </button>
+
+            <div ref={tabListRef} className="flex-1 overflow-x-auto">
+              <TabList className="flex whitespace-nowrap items-center">
+                {visibleCategories.map((label, idx) => (
+                  <Tab
+                    key={idx}
+                    className={({ selected }) =>
+                      `mx-2 py-2 transition-colors duration-200 ${
+                        selected
+                          ? 'font-bold border-b-2 border-[var(--color-primary)]'
+                          : 'hover:border-b-2'
+                      }`
+                    }
+                  >
+                    {label}
+                  </Tab>
+                ))}
+              </TabList>
+            </div>
+
+            <button onClick={() => scrollTabs('right')} className="p-2 hover:bg-[var(--color-secondary)] rounded-full">
+              <ChevronRightIcon className="h-5 w-5 text-[var(--color-primary)]" />
+            </button>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className='bg-[var(--color-background)] text-[var(--color-primary)] border-b w-full'>
+          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
+            <div
+              className="overflow-x-auto color mb-2"
+            >
+              <div className="inline-flex items-center gap-5 py-2 px-1">
+                <TuneRoundedIcon className='text-[var(--color-primary)]' />
+                {filters.map((label, idx) => (
+                  <span
+                    key={idx}
+                    onClick={() => {
+                      setSelectedFilter(selectedFilter === label ? null : label);
+                      setTabIndex(0); // Always go back to first tab
+                    }}
+                    className={`text-sm cursor-pointer px-3 py-1 rounded-md shadow-sm hover:shadow-md whitespace-nowrap ${
+                      selectedFilter === label
+                        ? 'bg-[var(--color-primary)] text-white'
+                        : 'bg-[var(--color-secondary)]'
+                    }`}
+                  >
+                    {label}
+                  </span>
+                ))}
+
+                {selectedFilter && (
+                  <button
+                    onClick={() => {
+                      setSelectedFilter(null);
+                      setTabIndex(0); // Reset to tab 0 when filter cleared
+                    }}
+                    className="text-xs text-[var(--color-primary)] underline ml-4"
+                  >
+                    Clear Filter
+                  </button>
+                )}
               </div>
             </div>
           </div>
+        </div>
 
-          <div className='bg-[var(--color-background)] text-[var(--color-primary)] border-b-1 border- [var(--color-secondary)] w-full'>
-            <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-              <div>
-                <TabList className="flex overflow-x-auto whitespace-nowrap no-scrollbar items-center">
-                  <TuneRoundedIcon className='mr-2' />
-                  {filters.map((label, idx) => (
-                    <React.Fragment key={idx}>
-                      {idx !== 0 && <span className='mx-2'> </span>}
-                      <Tab 
-                        className={({ selected }) => 
-                        `py-2 transition-color duration-200 ${
-                          selected
-                            ? 'font-bold border-b-2 border-[var(--color-primary)]'
-                                    : 'hover:border-b-2'
-                        }`}
-                      >
-                        {label}
-                      </Tab>
-                    </React.Fragment>
-                  ))}
-                </TabList>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <TabPanels>
-              <TabPanel> 
-                <div className="mt-10">
+        {/* Product Panels */}
+        <TabPanels>
+          {visibleCategories.map((cat, idx) => {
+            const filtered = products.filter(p =>
+              p.category === cat && (!selectedFilter || p.tags?.includes(selectedFilter))
+            );
+
+            return (
+              <TabPanel key={idx}>
+                <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-10">
                   <div>
-                    <h3 className="text-xl font-bold">{categories[0]}</h3>
+                    <h3 className="text-xl font-bold">{cat}</h3>
                     <p className="text-base font-normal">
-                      {categoriesDescription[0]}
+                      {categoriesDescription[categories.indexOf(cat)]}
                     </p>
                   </div>
-
                   <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
+                    {filtered.length > 0 ? (
+                      filtered.map((product, i) => (
+                        <ProductCard key={i} product={product} />
+                      ))
+                    ) : (
+                      <p className="text-gray-400">No products available.</p>
+                    )}
                   </div>
                 </div>
               </TabPanel>
-              
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[1]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[1]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[2]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[2]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[3]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[3]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[4]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[4]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[5]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[5]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[6]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[6]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-
-              <TabPanel> 
-                <div className="mt-10">
-                  <div>
-                    <h3 className="text-xl font-bold">{categories[7]}</h3>
-                    <p className="text-base font-normal">
-                      {categoriesDescription[7]}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap justify-start gap-6 my-10">
-                    {products.map((product, idx) => (
-                      <ProductCard key={idx} product={product} />
-                    ))}
-                  </div>
-                </div>
-              </TabPanel>
-            </TabPanels>
-          </div>
-        </TabGroup>
-      </div>
+            );
+          })}
+        </TabPanels>
+      </TabGroup>
     </div>
-
-    
-  )
+  );
 }
 
-export default Drinks
+export default Drinks;

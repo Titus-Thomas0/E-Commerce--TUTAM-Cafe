@@ -1,4 +1,3 @@
-// pages/OrderCustomize.jsx
 import React from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import BreadCrumbs from '../BreadCrumbs';

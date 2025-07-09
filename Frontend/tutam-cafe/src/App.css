@@ -16,6 +16,9 @@
     --color-success-light: #d4edda;
     --color-error: #dc3545;
     --color-error-light: #e4b5ba;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-secondary);
 }
 
 /*==========Declaring body element==========*/
@@ -34,4 +37,12 @@ body {
 
 .boxShadow:hover {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+.user-bg-image {
+    background-image: url('../src/assets/images/Account-backgroundImage.png');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
 }
