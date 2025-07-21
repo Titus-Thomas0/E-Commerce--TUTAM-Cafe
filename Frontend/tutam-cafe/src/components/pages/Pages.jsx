@@ -11,6 +11,7 @@ import Rewards from './rewards/Rewards'
 import SelectStore from './order/SelectStore'
 import OrderCustomize from './order/OrderCustomize'
 import Settings from './settings/Settings'
+import CreateAccount from './account/CreateAccount'
 
 
 function Pages() {
@@ -26,6 +27,7 @@ function Pages() {
         <Route path="/Store" element={ <Store /> } />
         <Route path="/Search" element={ <Search /> } />
         <Route path="/Account" element={ <Account /> } />
+        <Route path="/Registration" element={ <CreateAccount /> } />
         <Route path="/Account/Settings" element={ <Settings /> } />
         <Route path="/Rewards" element={ <Rewards />} />
       </Routes>

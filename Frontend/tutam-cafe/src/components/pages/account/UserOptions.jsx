@@ -24,40 +24,43 @@ const userLinks = [
 
 const UserOptions = ({ isLoggedIn }) => {
   return (
-    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-10 text-[var(--color-primary)] space-y-2">
-      {/* Show links conditionally based on login status */}
-      {userLinks
-        .filter(link => isLoggedIn || link.alwaysShow) // show all if logged in, else only alwaysShow
-        .map((link, index) => (
-          <div key={index} className="border-b last:border-none">
+    <div className='rounded-t-4xl bg-[var(--color-background)] shadow-lg'>
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 py-10 text-[var(--color-primary)] space-y-2">
+        {/* Show links conditionally based on login status */}
+        {userLinks
+          .filter(link => isLoggedIn || link.alwaysShow) // show all if logged in, else only alwaysShow
+          .map((link, index) => (
+            <div key={index} className="border-b last:border-none">
+              <a
+                href={link.href}
+                className="flex items-center justify-between py-4 px-2 transition rounded"
+              >
+                <span className="font-semibold flex items-center">
+                  {link.icon}{link.label}
+                </span>
+                {/* Show arrow icon except for HELP CENTER in minimal mode */}
+                <ArrowForwardIosIcon className="w-4 h-4" />
+              </a>
+            </div>
+          ))}
+
+        {/* Logout only if logged in */}
+        {isLoggedIn && (
+          <div className="border-b">
             <a
-              href={link.href}
-              className="flex items-center justify-between py-4 px-2 transition rounded"
+              href="/logout"
+              className="flex items-center justify-between py-4 px-2 text-[var(--color-error)] transition rounded"
             >
-              <span className="font-semibold flex items-center">
-                {link.icon}{link.label}
+              <span className="font-medium flex items-center">
+                <LogoutRoundedIcon className='mr-2' />
+                LOG OUT
               </span>
-              {/* Show arrow icon except for HELP CENTER in minimal mode */}
-              <ArrowForwardIosIcon className="w-4 h-4" />
             </a>
           </div>
-        ))}
-
-      {/* Logout only if logged in */}
-      {isLoggedIn && (
-        <div className="border-b">
-          <a
-            href="/logout"
-            className="flex items-center justify-between py-4 px-2 text-[var(--color-error)] transition rounded"
-          >
-            <span className="font-medium flex items-center">
-              <LogoutRoundedIcon className='mr-2' />
-              LOG OUT
-            </span>
-          </a>
-        </div>
-      )}
+        )}
+      </div>
     </div>
+    
   );
 };
 
