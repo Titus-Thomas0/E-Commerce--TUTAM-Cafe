@@ -11,7 +11,9 @@ function GetUserDetails() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    mobileNumber: '',
+    password: '',
+    confirmPassword: '',
     otp: '',
     address: '',
   });
