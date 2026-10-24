@@ -11,9 +11,10 @@ const Stepper = ({ currentStep = 1 }) => {
             {/* Step Circle */}
             <div
               className={`relative z-10 flex items-center justify-center w-8 h-8 rounded-full border-2 
-              ${currentStep >= step
+              ${currentStep == step
                 ? 'border-[var(--color-primary)] bg-[var(--color-background)]'
-                : 'border-[var(--color-secondary)] bg-[var(--color-background)]'}`}
+                : 'border-[var(--color-secondary)] bg-[var(--color-background)]'}
+                ${currentStep > step ? 'bg-[var(--color-primary)] text-[var(--color-background)] border-none' : ''}`}
             >
               <span className="text-sm font-medium">{step}</span>
             </div>
